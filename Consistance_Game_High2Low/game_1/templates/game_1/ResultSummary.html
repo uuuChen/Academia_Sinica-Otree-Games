@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    <h1>
+        END
+    </h1>
+{% endblock %}
+
+
+{% block content %}
+
+    <br><br><br>
+
+    {% include 'game_1/GroupResults.html' %}
+
+    <br><br><br>
+
+    <h2>Switch to next game</h2>
+
+    {% next_button %}
+
+{% endblock %}

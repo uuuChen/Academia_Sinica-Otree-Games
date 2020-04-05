@@ -1,0 +1,17 @@
+<table class="table">
+    {% if player.round_number != 1 or player.log != '' %}
+        <tr>
+            <th>Round</th>
+            <th>log</th>
+        </tr>
+    {% endif %}
+
+    {% for p in player_in_all_rounds %}
+        {% if p.log != '' %}
+            <tr>
+                <td>{{ p.round_number }}</td>
+                <td>{{ p.log }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>

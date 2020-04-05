@@ -1,0 +1,72 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+<div class="card bg-light" id="instructionWrapper">
+    <div class="card-body">
+        <h3 id="title">
+            <div align="middle"> 最後，請您幫忙回答以下三個問題，實驗就結束了！</div>
+        </h3>
+        <div class="question">
+            請問您的性別：
+        </div>
+        <div class="options">
+            {% formfield player.questionnaire_1_options label='' %}
+        </div>
+
+        <div class="question">
+            請問您的年紀：
+        </div>
+        <div class="options">
+            {% formfield player.questionnaire_2_options label='' %}
+        </div><br>
+
+        <div class="question">
+            請問您每天利用社群媒體（像是LINE、臉書之類的），每天會聯絡的（有互相留言，包含貼圖），大約多少人？
+        </div>
+        <div class="options">
+            {% formfield player.questionnaire_3_options label='' %}
+        </div>
+
+        <div align="center">
+            <button class="btn btn-primary btn-large" style="width:15%;"> 提交 </button>
+        </div>
+    </div>
+</div> <br><br>
+
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+
+        #title {
+            color: #E63F00;
+            font-size:30px;
+            margin: 0px 0px 40px 0px;
+        }
+
+        .indent_1 {
+            margin-left:28px;
+        }
+
+        .question_title {
+            color:#009FCC;
+            font-size:25px;
+            font-weight:bold;
+            margin: 20px 0px 13px 0px;
+        }
+        .question {
+            margin: 0px 0px 20px 0px;
+            font-size:20px;
+        }
+        .options {
+            margin: 0px 0px 0px 17px;
+            font-size:20px;
+        }
+    </style>
+{% endblock %}
+
+
+

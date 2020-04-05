@@ -1,0 +1,18 @@
+<table class="table">
+    <tr>
+        <th>Round</th>
+        <th>Origin Points</th>
+        <th>Send</th>
+        <th>Receive</th>
+        <th>Total Points</th>
+    </tr>
+    {% for p in player_in_all_rounds %}
+        <tr>
+            <td>{{ p.round_number }}</td>
+            <td>{{ p.origin_amount }}</td>
+            <td>{{ p.sent_total_amount }}</td>
+            <td>{{ p.receive_amount }}</td>
+            <td>{{ p.total_amount }}</td>
+        </tr>
+    {% endfor %}
+</table>

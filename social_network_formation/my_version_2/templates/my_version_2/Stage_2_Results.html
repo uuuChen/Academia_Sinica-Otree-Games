@@ -1,0 +1,50 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    你是玩家{{ cur_id }} / 階段二結果 &nbsp; &nbsp;( 第 {{ round_number }} 回合  )
+{% endblock %}
+
+{% block content %}
+
+    <br><br><br> <h5>以下是連結最新的結果：</h5>
+
+    <table class="table">
+        <tr>
+            <th width="230" align="left"> 您提出連結的人數 </th>
+            <td> {{cur_records.0}} 位 </td>
+        </tr>
+        <tr>
+            <th> 決定與您連結的人數 </th>
+            <td> {{cur_records.1}} 位</td>
+        </tr>
+        <tr>
+            <th> 您產生的新連結數 </th>
+            <td> {{cur_records.2}} 位</td>
+        </tr>
+        <tr>
+            <th> 您上一回合的連結人數 </th>
+            <td> {{cur_records.3}} 位</td>
+        </tr>
+        <tr>
+            <th> 您目前的連結人數 </th>
+            <td> {{cur_records.4}} 位</td>
+        </tr>
+    </table>
+
+    <div class="text-left">
+        <button class="otree-btn-next btn btn-primary">Next</button>
+    </div>
+
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .table {
+            margin: 30px 0px 40px 0px;
+        }
+    </style>
+{% endblock %}
+
+

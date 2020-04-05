@@ -1,0 +1,43 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Version 2: Your Choice
+{% endblock %}
+
+{% block content %}
+    {% include 'my_version_1/GroupResults.html' %}<br><br>
+
+    <h5>
+        You are player {{player_id}},&nbsp;and you have {{player_get_points}} points now.
+    </h5>
+
+    <br><br><br>
+
+    <h2>
+        Sent Points To Others
+    </h2>
+
+    <br>
+
+    <table class="table">
+        <tr>
+            {% for id in receive_players_id %}
+                <th>
+                    Player {{id}}：
+                </th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for field in form %}
+                <td>
+                    {{ field }}
+                </td>
+            {% endfor %}
+
+        </tr>
+    </table>
+
+    {% next_button %}
+
+{% endblock %}

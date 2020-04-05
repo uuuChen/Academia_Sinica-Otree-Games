@@ -1,0 +1,26 @@
+<h2>
+    Group Results
+</h2>
+
+<br>
+
+<table class="table">
+    <tr>
+        {% for p in players %}
+            {% if player.get_id != p.get_id %}
+                <th> Player {{ p.get_id　}} </th>
+            {% else %}
+                <th> You </th>
+            {% endif %}
+        {% endfor %}
+    </tr>
+
+    <tr>
+        {% for p in players %}
+            <td> {{ p.get_points }} </td>
+        {% endfor %}
+    </tr>
+
+</table>
+
+

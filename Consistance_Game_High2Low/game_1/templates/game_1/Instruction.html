@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block content %}
+<div class="card bg-light" style="width: 80%;  margin: 0 auto;" id="instructionWrapper">
+    <div class="card-body">
+        <h3 id="basic_game_rules">
+            <div align="middle"> 遊&nbsp;戲&nbsp;規&nbsp;則 </div>
+        </h3>
+
+        <div> 在遊戲一開始時，電腦會<div class="bold_text">隨機</div>分配每位參與者點數，每位所得到的點數不一樣，透過電腦螢幕，大家可以看到其他人手上的點數。實驗的任務是把這不均等的點數分配均等化；也就是說，目標是最後每個人手上的點數要相等（或是非常接近相等，如果無法剛好整除的話）。因此，在遊戲中您將決定是否要保留您手上的點數，或是把點數給出去，讓整體的分配更均等，直到達成實驗的目標。 </div><br>
+
+        <div> 請留意，這個實驗遊戲有提供獎勵，只要大家花越少的時間把整體的點數分配調整成均等（也就是說，所經歷的回合數越少），各位所獲得的報酬就越高。 </div><br>
+
+        <div> 另外，想跟您說一聲，因為這個實驗是現場即時進行的遊戲，所以我們會等所有人都答完或做完決定後，在一起進入下一回合。因為每個人速度不一樣，所以有時您需要稍做等待（電腦會呈現等待畫面），請您諒解。但做決定時間是有限時的，所以無論如何，遊戲一定會往前進行，請放心。 </div><br>
+
+        <div> 準備好了嗎？請按下一頁鍵開始今天的實驗！ </div><br>
+
+        <div align="center">
+            {% next_button %}
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        #basic_game_rules {
+            color: #FF0000;
+            margin: 0px 0px 40px 0px;
+        }
+        .bold_text{
+            display:inline;
+            font-weight:bold;
+        }
+    </style>
+{% endblock %}
+
+
+

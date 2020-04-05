@@ -1,0 +1,59 @@
+{% load otree static %}
+
+{% block content %}
+
+<div class="card bg-light" id="instructionWrapper">
+    <div class="card-body">
+        <!--<h3 id="basic_game_rules">-->
+            <!--階段二-->
+        <!--</h3>-->
+        <div class="item">
+            <h5 class="item_title">
+                遊戲規則:
+            </h5>
+                <div  class="indent_1">
+                    <p> 以下是目前跟您有連結的對象，您可以考慮是否要切斷當中的一些連結</p> <br>
+                    <p> 再次提醒：連結一旦切斷，以後無法復合 </p> <br>
+                    <p> 請參考以下紀錄，記載著每一位對象到目前為止有參與遊戲的總回合數當中，有多少次他/她給出點數：</p>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block styles %}
+    <style>
+        #basic_game_rules {
+            color:#FF0000;
+        }
+
+        .item_title{
+            font-weight:bold;
+            color:#009FCC;
+            margin: 10px 0px 20px 0px;
+
+        }
+        .indent_1 {
+            margin-left:20px;
+        }
+        .indent_2 {
+            margin-left:28px;
+        }
+        .indent_3 {
+            margin-left:37px;
+        }
+        .indent_1_title {
+            font-size:20px;
+            font-weight:bold;
+            margin: 0px 0px 8px 0px;
+        }
+
+        .indent_2_title {
+            font-size:18px;
+            font-weight:bolder;
+        }
+    </style>
+{% endblock %}
+
+
