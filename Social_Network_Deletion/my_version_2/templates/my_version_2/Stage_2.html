@@ -33,13 +33,104 @@
             {% endfor %}{% endfor %}
         </table>
 
+        <div id="social_graph"></div>
     {% else %}
         <div class="text-left" style="color:#FF0000;">
             <h5>您與所有玩家皆已斷除連結！</h5>
         </div>
-
     {% endif %} <br><br>
+
+    <div id="container"></div>
 
     {% next_button %}
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/networkgraph.js"></script>
+
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%:
+        }
+
+        #container {
+          margin: 0 auto;
+          height: 100%;
+          width: 100%;
+        }
+    </style>
+
+
+    <script>
+        var social_network_chart = Highcharts.chart('container', {
+            chart: {
+                type: 'networkgraph',
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                formatter: function () {
+                    if (this.key == 'You')
+                        return 'You';
+                    else {
+                        return this.key + {{ player.participant.vars.highcharts_tooltip|json }};
+                    }
+                }
+            },
+            plotOptions: {
+                networkgraph: {
+                  keys: ['from', 'to'],
+                  point:{
+                      events: {
+                           'click': function (event) {
+                               <!--console.log(event);-->
+                               console.log(this);
+                               if (this.id != "You"){
+                                   var target_checkbox_id = "id_cut_" + this.id.split(" ")[1];
+                                   if (this.color == "#7cb5ec") {
+                                       console.log(this);
+                                       this.color = "#E0E0E0";
+                                       document.getElementById(target_checkbox_id).checked = true;
+                                       this.series.chart.redraw();
+                                   }
+                                   else {
+                                       console.log(this);
+                                       this.color = "#7cb5ec";
+                                       var true_id = "id_cut_" + this.id.split(" ")[1];
+                                       document.getElementById(target_checkbox_id).checked = false;
+                                       this.series.chart.redraw();
+                                   }
+                               }
+                            },
+                            'mouseOver': function () {
+
+
+                            },
+                            'mouseOut': function () {
+
+                            }
+                      },
+                   },
+                }
+            },
+            series: [{
+                marker: {
+                  radius: 40
+                },
+                dataLabels: {
+                  enabled: true,
+                  linkFormat: '',
+                  allowOverlap: true
+                },
+                data: {{ player.participant.vars.highcharts_data|json }}
+            }]
+        });
+
+        console.log(social_network_chart);
+    </script>
 {% endblock %}
+
+
+

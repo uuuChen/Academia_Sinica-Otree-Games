@@ -71,6 +71,7 @@ class Subsession(BaseSubsession):
             player.set_last_stage_2_end_conn_nums(nums=0)
             player.set_last_stage_2_cut_conn_nums_list(cut_list=[])
 
+            player.participant.vars['highcharts_tooltip'] = {}
 
 class Group(BaseGroup):
 
@@ -254,7 +255,7 @@ def make_radio_select_string_field(choices=None):
 class Player(BasePlayer):
     _others_id_in_group_record = models.StringField()
     _total_points_records = models.IntegerField()
-    coop_with_others = make_radio_select_boolean_field()
+    coop_with_others = make_radio_select_boolean_field(True)
     consent = make_checkbox_boolean_field()
     questionnaire_1_options = make_radio_select_string_field([["男", "男"], ["女", "女"]])
     questionnaire_2_options = make_drop_down_menu_string_field([
@@ -473,6 +474,14 @@ class Player(BasePlayer):
     def set_others_id_in_group(self, id_list):
         self.participant.vars['others_id_in_group'] = id_list
 
+        # format of highcharts_data: [
+        #     ['You', 'Node 2'],
+        #     ['You', 'Node 3'],
+        #     ['You', 'Node 4'],
+        #     ['You', 'Node 5'],
+        # ]
+        self.participant.vars['highcharts_data'] = [['You', 'Player ' + str(other_id)] for other_id in id_list]
+
     def set_others_id_not_in_group(self, id_list):
         self.participant.vars['others_id_not_in_group'] = id_list
 
@@ -512,7 +521,7 @@ class Player(BasePlayer):
         return [others_nums, others_avg_conns, others_avg_earned_points]
 
     def get_stage_2_conn_others_records(self):
-        """ Get A list of non connected others' attributes to be displayed in 'Stage_2.html. """
+        """ Get A list of connected others' attributes to be displayed in 'Stage_2.html. """
         others_records = []
         for other_player in self.group.get_players_by_id_list(id_list=self.get_others_id_in_group()):
             id = other_player.get_id()
@@ -520,6 +529,9 @@ class Player(BasePlayer):
             total_playing_rounds = other_player.get_total_stage_1_playing_rounds()
             other_records = [id, total_given_rounds, total_playing_rounds]
             others_records.append(other_records)
+            self.participant.vars['highcharts_tooltip'][id] = ' ({},{})'.format(total_given_rounds,
+                                                                                total_playing_rounds)
+
         return others_records
 
     def get_stage_2_results_self_records(self):

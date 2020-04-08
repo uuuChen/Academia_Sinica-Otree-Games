@@ -126,7 +126,7 @@ class Stage_1_Results(Page):
 class Stage_2(Page):
 
     form_model = 'player'
-    timeout_seconds = 60
+    # timeout_seconds = 60
 
     def get_form_fields(self):
         form_fields = []
@@ -141,6 +141,18 @@ class Stage_2(Page):
             'has_any_connection': self.player.has_any_connection(),
             'round_number': self.round_number,
         }
+
+    # def js_vars(self):
+    #     return dict(
+    #         payoff=self.player.payoff,
+    #         cur_id=self.player.get_id(),
+    #         highcharts_data=[
+    #           ['Node 1', 'Node 2'],
+    #           ['Node 1', 'Node 3'],
+    #           ['Node 1', 'Node 4'],
+    #           ['Node 1', 'Node 5'],
+    #         ],
+    #     )
 
 
 class Stage_2_WaitPage(WaitPage):
@@ -212,10 +224,10 @@ class All_Game_Over_2(Page):
 
 
 page_sequence = [
-    Consent,
-    Consent_WaitPage,
-    Pretest,
-    Pretest_WaitPage,
+    # Consent,
+    # Consent_WaitPage,
+    # Pretest,
+    # Pretest_WaitPage,
     Stage_1,
     Stage_1_WaitPage,
     Stage_1_Results,
