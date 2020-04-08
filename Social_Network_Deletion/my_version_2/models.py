@@ -71,7 +71,7 @@ class Subsession(BaseSubsession):
             player.set_last_stage_2_end_conn_nums(nums=0)
             player.set_last_stage_2_cut_conn_nums_list(cut_list=[])
 
-            player.participant.vars['highcharts_tooltip'] = {}
+            player.participant.vars['stage2_highcharts_tooltip'] = {}
 
 class Group(BaseGroup):
 
@@ -121,7 +121,8 @@ class Group(BaseGroup):
         self.session.vars['are_all_game_over'] = are_all_game_over
 
     def compute_points_by_stage_1_results(self):
-        for cur_player in self.get_players():
+        players = self.get_players()
+        for cur_player in players:
             total_earned_points = 0
             given_id_list = []
             non_given_id_list = []
@@ -167,6 +168,9 @@ class Group(BaseGroup):
             cur_player.set_last_stage_1_earned_points(points=total_earned_points)
             cur_player.set_last_stage_1_conn_nums(nums=cur_player.get_others_nums_in_group())
 
+        coop_rate_by_rounds = self.get_cooperate_rates(players)
+        self.session.vars['stage1Results_highcharts_data'] = coop_rate_by_rounds
+
     def make_groups_by_stage_2_results(self):
         for cur_player in self.get_players():
             cur_cut_nums = 0
@@ -194,13 +198,17 @@ class Group(BaseGroup):
             cur_player.set_last_stage_2_end_conn_nums(nums=end_conn_nums)
             cur_player.set_last_stage_2_cut_conn_nums_list(cut_list=[cur_cut_nums, others_cut_nums])
 
-    def plot_results2jpg(self, players):
+    def get_cooperate_rates(self, players):
         coop_sum_by_rounds = np.array([0.0] * (self.round_number + 1))
         coop_count_dict = {False: 0, True: 1}
         for cur_player in players:
-            for round_idx in range(1, self.round_number+1):
+            for round_idx in range(1, self.round_number + 1):
                 coop_sum_by_rounds[round_idx] += coop_count_dict[cur_player.in_round(round_idx).coop_with_others]
         coop_rate_by_rounds = list((coop_sum_by_rounds / len(players))[1:])
+        return coop_rate_by_rounds
+
+    def plot_stage1Results2jpg(self, players):
+        coop_rate_by_rounds = self.get_cooperate_rates(players)
 
         # plot bar by matplotlib
         x = list(range(1, self.round_number+1))
@@ -227,7 +235,7 @@ class Group(BaseGroup):
         if not self.have_any_playing_player() or self.round_number == Constants.num_rounds:
             self.set_are_all_game_over(True)
             self.trans_points_to_NTD()
-            # self.plot_results2jpg(all_players)
+            # self.plot_stage1Results2jpg(all_players)
 
 
 def make_checkbox_boolean_field():
@@ -258,29 +266,12 @@ class Player(BasePlayer):
     coop_with_others = make_radio_select_boolean_field(True)
     consent = make_checkbox_boolean_field()
     questionnaire_1_options = make_radio_select_string_field([["男", "男"], ["女", "女"]])
-    questionnaire_2_options = make_drop_down_menu_string_field([
-        "20 歲以下",
-        "21 歲",
-        "22 歲",
-        "23 歲",
-        "24 歲",
-        "25 歲",
-        "26 歲",
-        "27 歲",
-        "28 歲",
-        "29 歲",
-        "30 歲",
-        "30 歲以上",
+    questionnaire_2_options = make_drop_down_menu_string_field(["20 歲以下", "21 歲", "22 歲", "23 歲", "24 歲", "25 歲",
+                                                                "26 歲", "27 歲", "28 歲", "29 歲", "30 歲", "30 歲以上",
     ])
-    questionnaire_3_options = make_radio_select_string_field([
-        "小於 10 人",
-        "介於 10 至 19 人",
-        "介於 20 至 29人",
-        "介於 30 至 59人",
-        "介於 50 至 99人",
-        "介於 100 至 199人",
-        "多於 200 人"
-    ])
+    questionnaire_3_options = make_radio_select_string_field(["小於 10 人", "介於 10 至 19 人", "介於 20 至 29人",
+                                                              "介於 30 至 59人", "介於 50 至 99人", "介於 100 至 199人",
+                                                              "多於 200 人"])
     for i in range(1, Constants.MAX_NUM_PLAYERS + 1):
         locals()["cut_%s" % i] = make_checkbox_boolean_field()
     del i
@@ -478,9 +469,9 @@ class Player(BasePlayer):
         #     ['You', 'Node 2'],
         #     ['You', 'Node 3'],
         #     ['You', 'Node 4'],
-        #     ['You', 'Node 5'],
+        #     ['You', 'Node 5']...
         # ]
-        self.participant.vars['highcharts_data'] = [['You', 'Player ' + str(other_id)] for other_id in id_list]
+        self.participant.vars['stage2_highcharts_data'] = [['You', 'Player ' + str(other_id)] for other_id in id_list]
 
     def set_others_id_not_in_group(self, id_list):
         self.participant.vars['others_id_not_in_group'] = id_list
@@ -529,8 +520,8 @@ class Player(BasePlayer):
             total_playing_rounds = other_player.get_total_stage_1_playing_rounds()
             other_records = [id, total_given_rounds, total_playing_rounds]
             others_records.append(other_records)
-            self.participant.vars['highcharts_tooltip'][id] = ' ({},{})'.format(total_given_rounds,
-                                                                                total_playing_rounds)
+            self.participant.vars['stage2_highcharts_tooltip'][id] = ' ({},{})'.format(total_given_rounds,
+                                                                                       total_playing_rounds)
 
         return others_records
 

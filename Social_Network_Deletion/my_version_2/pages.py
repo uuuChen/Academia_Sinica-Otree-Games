@@ -75,7 +75,7 @@ class Pretest_WaitPage(WaitPage):
 class Stage_1(Page):
 
     form_model = 'player'
-    timeout_seconds = 60
+    # timeout_seconds = 60
 
     def vars_for_template(self):
         return {
@@ -105,7 +105,7 @@ class Stage_1_WaitPage(WaitPage):
 
     def after_all_players_arrive(self):
         self.group.compute_points_by_stage_1_results()
-        self.group.plot_results2jpg(self.group.get_players())
+        self.group.plot_stage1Results2jpg(self.group.get_players())
 
 
 class Stage_1_Results(Page):
@@ -233,7 +233,7 @@ page_sequence = [
     Stage_1_Results,
     Stage_2,
     Stage_2_WaitPage,
-    Stage_2_Results,
+    # Stage_2_Results,
     Plot_Results,
     All_Game_Over_1,
     Questionnaire,
