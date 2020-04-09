@@ -109,21 +109,13 @@
                                    }
                                    else {
                                        this.color = "#7cb5ec";
-                                       this.isDirty = true;
                                        target_checkboxEl.checked = false;
                                        this.series.chart.update(this.color);
-
                                    }
                                }
                             },
-                            'mouseOver': function () {
-
-
-                            },
-                            'mouseOut': function () {
-
-                            },
-
+                            'mouseOver': function () {},
+                            'mouseOut': function () {},
                       },
                    },
                 }
@@ -140,7 +132,6 @@
                 data: {{ player.participant.vars.stage2_highcharts_data|json }},
             }]
         });
-        <!--social_network_chart.series[0].data[0].firePointEvent('click');-->
     </script>
 {% endblock %}
 

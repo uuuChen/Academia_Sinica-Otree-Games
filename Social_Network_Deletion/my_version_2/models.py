@@ -520,11 +520,8 @@ class Player(BasePlayer):
             total_playing_rounds = other_player.get_total_stage_1_playing_rounds()
             other_records = [id, total_given_rounds, total_playing_rounds]
             others_records.append(other_records)
-            self.participant.vars['stage2_highcharts_tooltip'][id] = ' ({}/{})'.format(total_given_rounds,
+            self.participant.vars['stage2_highcharts_tooltip'][id] = ' [{}/{}]'.format(total_given_rounds,
                                                                                        total_playing_rounds)
-
-            # 2. '({},{}).format(total_given_rounds, total_playing_rounds)'
-            # 3. f'({total_giver_rounds},{total_playing_rounds})'
         return others_records
 
     def get_stage_2_results_self_records(self):

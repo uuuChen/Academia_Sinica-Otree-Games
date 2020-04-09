@@ -75,7 +75,7 @@ class Pretest_WaitPage(WaitPage):
 class Stage_1(Page):
 
     form_model = 'player'
-    # timeout_seconds = 60
+    timeout_seconds = 60
 
     def vars_for_template(self):
         return {
@@ -126,7 +126,7 @@ class Stage_1_Results(Page):
 class Stage_2(Page):
 
     form_model = 'player'
-    # timeout_seconds = 60
+    timeout_seconds = 60
 
     def get_form_fields(self):
         form_fields = []
@@ -224,16 +224,16 @@ class All_Game_Over_2(Page):
 
 
 page_sequence = [
-    # Consent,
-    # Consent_WaitPage,
-    # Pretest,
-    # Pretest_WaitPage,
+    Consent,
+    Consent_WaitPage,
+    Pretest,
+    Pretest_WaitPage,
     Stage_1,
     Stage_1_WaitPage,
     Stage_1_Results,
     Stage_2,
     Stage_2_WaitPage,
-    # Stage_2_Results,
+    Stage_2_Results,
     Plot_Results,
     All_Game_Over_1,
     Questionnaire,
