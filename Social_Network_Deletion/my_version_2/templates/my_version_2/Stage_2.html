@@ -66,8 +66,12 @@
                             var checkboxEl = document.getElementById(target_checkbox_id);
                             checkboxEl.addEventListener("click", function(data_id){
                                 this.series[0].data[data_id].toNode.firePointEvent('click');
-                                console.log(data_id);
                             }.bind(this, data_id));
+                            <!--checkboxEl.addEventListener("click",  (function(that, data_id){-->
+                                <!--return function(){-->
+                                    <!--that.series[0].data[data_id].toNode.firePointEvent('click');-->
+                                <!--};-->
+                            <!--})(this, data_id));-->
                             data_id += 1;
                         }
                     }
