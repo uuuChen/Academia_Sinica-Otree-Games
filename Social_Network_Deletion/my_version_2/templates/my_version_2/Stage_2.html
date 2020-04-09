@@ -33,14 +33,13 @@
             {% endfor %}{% endfor %}
         </table>
 
-        <div id="social_graph"></div>
+        <div id="social-graph"></div>
+
     {% else %}
         <div class="text-left" style="color:#FF0000;">
             <h5>您與所有玩家皆已斷除連結！</h5>
         </div>
     {% endif %} <br><br>
-
-    <div id="container"></div>
 
     {% next_button %}
 
@@ -55,11 +54,22 @@
         }
     </style>
 
-
     <script>
-        var social_network_chart = Highcharts.chart('container', {
+        var social_network_chart = Highcharts.chart('social-graph', {
             chart: {
                 type: 'networkgraph',
+                events:{
+                    'load': function(event) {
+                        <!--this.series[0].data[0].firePointEvent('click');-->
+                        for (var player_id of {{ player.get_others_id_in_group|json}}){
+                            var target_checkbox_id = "id_cut_" + player_id;
+                            var checkboxEl = document.getElementById(target_checkbox_id);
+                            checkboxEl.addEventListener("click", function(){
+                                alert('Player ' + player_id + ' Clicked');
+                            });
+                        }
+                    }
+                }
             },
             title: {
                 text: ''
@@ -69,7 +79,10 @@
                     if (this.key == 'You')
                         return 'You';
                     else {
-                        return this.key + {{ player.participant.vars.stage2_highcharts_tooltip|json }};
+                        console.log(this);
+                        var player_id = this.key.split(" ")[1];
+                        var tooltip_dict = {{ player.participant.vars.stage2_highcharts_tooltip|json }};
+                        return this.key + tooltip_dict[player_id];
                     }
                 }
             },
@@ -80,17 +93,25 @@
                       events: {
                            'click': function (event) {
                                console.log(this);
-                               if (this.id != "You"){
-                                   var target_checkbox_id = "id_cut_" + this.id.split(" ")[1];
+                               var clicked_node_name;
+                               if (this.id.split(" ")[1] === undefined){ // called outside
+                                   clicked_node_name = this.to;
+                               }else{ // node is actually clicked
+                                   clicked_node_name = this.id;
+                               }
+                               if (clicked_node_name != "You"){
+                                   var target_checkbox_id = "id_cut_" + clicked_node_name.split(" ")[1];
+                                   var target_checkboxEl = document.getElementById(target_checkbox_id);
+                                   console.log(this.color);
                                    if (this.color == "#7cb5ec") {
                                        this.color = "#E0E0E0";
-                                       document.getElementById(target_checkbox_id).checked = true;
+                                       target_checkboxEl.checked = true;
                                        this.series.chart.redraw();
+                                       console.log(this.color);
                                    }
                                    else {
                                        this.color = "#7cb5ec";
-                                       var true_id = "id_cut_" + this.id.split(" ")[1];
-                                       document.getElementById(target_checkbox_id).checked = false;
+                                       target_checkboxEl.checked = false;
                                        this.series.chart.redraw();
                                    }
                                }
@@ -101,7 +122,8 @@
                             },
                             'mouseOut': function () {
 
-                            }
+                            },
+
                       },
                    },
                 }
@@ -118,8 +140,7 @@
                 data: {{ player.participant.vars.stage2_highcharts_data|json }},
             }]
         });
-
-        console.log(social_network_chart);
+        <!--social_network_chart.series[0].data[0].firePointEvent('click');-->
     </script>
 {% endblock %}
 

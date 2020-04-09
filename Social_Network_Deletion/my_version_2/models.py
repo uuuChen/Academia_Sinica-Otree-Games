@@ -466,10 +466,10 @@ class Player(BasePlayer):
         self.participant.vars['others_id_in_group'] = id_list
 
         # format of highcharts_data: [
-        #     ['You', 'Node 2'],
-        #     ['You', 'Node 3'],
-        #     ['You', 'Node 4'],
-        #     ['You', 'Node 5']...
+        #     ['You', 'Player 2'],
+        #     ['You', 'Player 3'],
+        #     ['You', 'Player 4'],
+        #     ['You', 'Player 5']...
         # ]
         self.participant.vars['stage2_highcharts_data'] = [['You', 'Player ' + str(other_id)] for other_id in id_list]
 
@@ -520,9 +520,11 @@ class Player(BasePlayer):
             total_playing_rounds = other_player.get_total_stage_1_playing_rounds()
             other_records = [id, total_given_rounds, total_playing_rounds]
             others_records.append(other_records)
-            self.participant.vars['stage2_highcharts_tooltip'][id] = ' ({},{})'.format(total_given_rounds,
+            self.participant.vars['stage2_highcharts_tooltip'][id] = ' ({}/{})'.format(total_given_rounds,
                                                                                        total_playing_rounds)
 
+            # 2. '({},{}).format(total_given_rounds, total_playing_rounds)'
+            # 3. f'({total_giver_rounds},{total_playing_rounds})'
         return others_records
 
     def get_stage_2_results_self_records(self):
