@@ -60,12 +60,15 @@
                 type: 'networkgraph',
                 events:{
                     'load': function(event) {
+                        var data_id = 0;
                         for (var player_id of {{ player.get_others_id_in_group|json}}){
                             var target_checkbox_id = "id_cut_" + player_id;
                             var checkboxEl = document.getElementById(target_checkbox_id);
-                            checkboxEl.addEventListener("click", function(){
-                                this.series[0].data[0].toNode.firePointEvent('click');
-                            }.bind(this));
+                            checkboxEl.addEventListener("click", function(data_id){
+                                this.series[0].data[data_id].toNode.firePointEvent('click');
+                                console.log(data_id);
+                            }.bind(this, data_id));
+                            data_id += 1;
                         }
                     }
                 }
