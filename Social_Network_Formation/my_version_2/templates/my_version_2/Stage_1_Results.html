@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    你是玩家{{ cur_id }} / 階段一結果 &nbsp; &nbsp;( 第 {{ round_number }} 回合  )
+{% endblock %}
+
+{% block content %}
+
+    <br><br><br> <h5>以下是您這一回合的結果：</h5>
+
+    <table class="table">
+        <tr>
+            <th width="230" align="left"> 您的選擇： </th>
+            <td> {{cur_records.0}} </td>
+        </tr>
+        <tr>
+            <th> 決定把他/她們的點數給您的人數： </th>
+            <td> {{given_records.0}} 人</td>
+        </tr>
+        <tr>
+            <th> 決定把他/她們的點數保留給自己的人數： </th>
+            <td> {{non_given_records.0}} 人</td>
+        </tr>
+        <tr>
+            <th> 您總共獲得點數： </th>
+            <td> {{cur_records.2}} 點</td>
+        </tr>
+    </table>
+
+    <div class="text-left">
+        <button class="otree-btn-next btn btn-primary">Next</button>
+    </div>
+
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .table {
+            margin: 30px 0px 40px 0px;
+        }
+    </style>
+{% endblock %}
+
+

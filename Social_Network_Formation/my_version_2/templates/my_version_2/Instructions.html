@@ -1,0 +1,95 @@
+{% load otree static %}
+
+{% block content %}
+<div class="card bg-light" id="instructionWrapper">
+    <div class="card-body">
+        <div align="center">
+            <h3 id="basic_game_rules">
+                基本遊戲規則
+            </h3>
+        </div>
+        <br>
+        <div class="item">
+            <div class="indent_1">
+                遊戲會進行數個回合，在每一回當中，您將會決定要與哪些人互動，在互動過程中，您將做一些攸關自己以及對方報酬的決定。
+            </div>
+            <h5 class="item_title">
+                每一回合有兩個階段
+            </h5>
+                <div  class="indent_1">
+                    <div class="indent_1_title">
+                        階段一：
+                    </div>
+                        <div class="indent_2">
+                            針對每一位與您有互動資格的對方參與者，您手上會有 1 點，您決定是否保留點數，或是給予對方。若給予對方，對方的點數會變成<div class="text_highlight"> 雙倍 (2點) </div>。當然，遊戲中與您互動的對方，也會決定是否要保留點數給自己，還是把點數給您。若是給您，您一樣會得到<div class="text_highlight"> 雙倍 (2點) </div>的點數。<br><br>
+                            <div align="center" class="photo"><img src='{% static "images/photo1.jpg" %}' width="60%"/><br><br></div>
+                            您所做的決定時會適用每一位與您交手的對方參與者。例如說，假設您有 3 位對象要互動，那麼針對每一位對象您有 1 點的點數，所以您手上總共會有 3 點。如果您決定給出，那麼，這些點數變成雙倍，然後分別給予這三位對方，所以每一位對方就會收到 2 點。但如果您選擇不給，那麼您就保有原來總共 3 點。<br><br><br>
+                            <div align="center" class="photo"><img src='{% static "images/photo2.jpg"%}' width="95%"/><br><br></div>
+                            請留意，遊戲中您所得到的點數（您自己保留的，和別人給您的），最後會換算成現金禮券報酬給您。累積的點數越多，報酬越高，<div class="text_highlight"> 最高</div>可獲得四百元（但這將取決您和對手在遊戲中所做的決定而定）！<br><br>
+
+                        </div>
+                    <div class="indent_1_title">
+                        階段二：
+                    </div>
+                        <div class="indent_2">
+                            在這一階段中，您可以根據之前互動的紀錄，來決定下一回合的遊戲中，要與誰來互動。到時<div class="text_highlight"> 您可以從還沒有跟您有連結的參與者名單中，挑選您中意的對象，但是同時必須對方也挑選您，在「情同意合」的狀況下，您們彼此才算配對成功 </div>，可以在之後的遊戲中互動。<br><br>
+                            <div class="text_highlight"> 請注意，遊戲的規則是「木已成舟」，意思是說，一旦您與任何對方配對與連結成功後，在接下來的遊戲中，您和對方的連結關係會一直存在</div>。也就是說，直到遊戲結束前，在每一回合中，您都會和這些與您有連結關係的對方互動。不管之後您喜歡或不喜歡，直到實驗結束前，您都沒有機會切斷任何已成的關係。<br><br>
+                            為了讓您擁有充分的資訊，第一回合的遊戲（第一階段）當中，我們將讓您將與現場的每一位參加者互動，從那之後您就有選擇互動對象的權利。<br><br>
+                        </div>
+                    <hr>
+                    <div class="indent_2">
+                        <br>以上的規則，清楚嗎？<br><br>
+                        另外，想跟您說一聲，因為這個實驗是現場即時進行的遊戲，所以我們會等所有人都答完或做完決定後，再一起進入下一回合。因為每個人速度不一樣，所以有時您需要稍做等待（電腦會呈現等待畫面），請您諒解。但作答時間是有限時的，所以無論如何，遊戲一定會往前進行，請放心。<br><br>
+                        除了在等候階段，如果您真的發現電腦螢幕有疑似沒有動靜時，請您按畫面重整的按鈕（或直接在網址上按ENTER鍵）讓它前進。<br><br>
+                        為了確定您瞭解遊戲規則，以下請您回答五個關於遊戲的問題，答錯可以重答，但必須全部問題答對之後，實驗才會開始。<br><br>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block styles %}
+    <style>
+        #basic_game_rules {
+            color: #E63F00;
+            font-size: 35px;
+        }
+        .photo{
+            margin: 10px 0px;
+        }
+        .item_title{
+            font-weight:bold;
+            color:#009FCC;
+            margin: 30px 0px 20px 0px;
+            font-size: 25px;
+
+        }
+        .indent_1 {
+            margin-left:20px;
+            font-size: 20px;
+        }
+        .indent_2 {
+            margin:13px 0px 0px 28px;
+            font-size: 20px;
+        }
+        .indent_1_title {
+            font-size:20px;
+            font-weight:bold;
+            margin: 0px 0px 8px 0px;
+            font-size: 25px;
+        }
+        .text_highlight {
+            display:inline;
+            font-weight:bold;
+            font-size:20px;
+        }
+        .text_amplify {
+            display:inline-block;
+            font-size:30px;
+        }
+    </style>
+{% endblock %}
+
+

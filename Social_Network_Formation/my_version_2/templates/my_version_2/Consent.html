@@ -1,0 +1,89 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+<div class="card bg-light " style="width: 80%;  margin: 0 auto;" id="instructionWrapper">
+    <div class="card-body">
+        <h3 id="basic_game_rules">
+            <div align="middle"> 同&nbsp;&nbsp;意&nbsp;&nbsp;書 </div>
+        </h3>
+        <div class="item">
+            <div  class="indent_1">
+                <p> 您好，歡迎參加我們的實驗！ </p><br>
+
+                <p> 在今天的實驗中，您將與其他現場的參加者進行一個互動性遊戲。在遊戲中，您將做出一些決定，決定沒有對錯之分，但您的決定將會攸關您的報酬，也會影響別人的報酬數額。在實驗結束後，我們將給您車馬費，再加上您在實驗中所得到的額外報酬。
+                </p><br>
+
+                <p> 本實驗採用匿名的方式進行，任何有關您的個人資料，不會在實驗中顯示，請您放心。</p><br>
+
+                <p> 實驗進行中，請專注於實驗視窗中的內容，不要開啟其他瀏覽器視窗做私人的事，不要因為分心，而不小心關閉了實驗的視窗，如此一來，電腦將很難追蹤您在實驗中的紀錄，有可能讓您失去了獲得額外報酬的機會。 </p><br>
+
+                <p> 實驗都是透過電腦與網絡來進行，請不要和別人交談，也請不要飲食。 </p><br>
+
+                <p> 以上的規則說明，請您遵守。 </p><br>
+
+                <p> 如果您願意參與今天的實驗，請在以下空格處打勾。 </p><br>
+
+                <button id="clockBtn">Clock Button</button>
+
+                <div align="center" style="font-size:20px; color: #E63F00; font-weight:bold; font-size:22px;">
+                    {% formfield player.consent label="我願意參與今天的實驗" %}<br>
+                    {% next_button %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block styles %}
+    <style>
+        #basic_game_rules {
+            color:#E63F00;
+            font-size:35px;
+            margin: 0px 0px 40px 0px;
+        }
+
+        .item_title{
+            font-weight:bold;
+            color:#009FCC;
+            margin: 30px 0px 20px 0px;
+
+        }
+        .indent_1 {
+            margin-left:20px;
+            font-size:20px;
+        }
+        .indent_2 {
+            margin-left:28px;
+        }
+        .indent_3 {
+            margin-left:37px;
+        }
+        .indent_1_title {
+            font-size:20px;
+            font-weight:bold;
+            margin: 0px 0px 8px 0px;
+        }
+
+        .indent_2_title {
+            font-size:18px;
+            font-weight:bolder;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts%}
+     <script>
+        document.getElementById("clockBtn").addEventListener("click", displayDate);
+        function displayDate() {
+            var clockButton = document.getElementById("clockBtn");
+            clockButton.style.backgroundColor = "#000000";
+            window.alert(clockButton.style.left);
+        }
+    </script>
+{% endblock %}

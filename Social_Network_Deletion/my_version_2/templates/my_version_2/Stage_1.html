@@ -1,0 +1,83 @@
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    玩家{{ cur_id }} / 階段一 &nbsp; &nbsp;( 第 {{ round_number }} 回合  )
+{% endblock %}
+
+{% block content %}
+
+    {% if player.round_number != 1 %}
+
+        <h5> 請參考上一回合與您連結並交手的人的綜合紀錄： </h5> <br>
+
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>人數</th>
+                <th>他們上一回合的連結數（平均值）</th>
+                <th>他們所獲得的總點數（平均值）</th>
+            </tr>
+            <tr>
+                <th> 選擇「給」的那些人 </th>
+                <td> {{given_records.0}} </td>
+                <td> {{given_records.1}} </td>
+                <td> {{given_records.2}} </td>
+            </tr>
+            <tr>
+                <th> 選擇「不給」的那些人 </th>
+                <td> {{non_given_records.0}} </td>
+                <td> {{non_given_records.1}} </td>
+                <td> {{non_given_records.2}} </td>
+            </tr>
+        </table><br><br>
+
+        <h5>以下是您上一回合的紀錄：</h5> <br>
+
+        <table class="table">
+            <tr >
+                <th width="230"> 您的選擇： </th>
+                <td> {{cur_records.0}} </td>
+            </tr>
+            <tr>
+                <th width="230"> 您的連結數： </th>
+                <td> {{cur_records.1}} </td>
+            </tr>
+            <tr>
+                <th width="230"> 您獲得的總點數： </th>
+                <td> {{cur_records.2}} </td>
+            </tr>
+        </table><br><br>
+
+    {% endif %}
+
+    {% if player.round_number == 1 or has_any_connection %}
+
+        <table class="table">
+            <tr>
+                <th style="font-size:21px;"> 選擇： </th>
+            </tr>
+            <tr>
+                <td> {% formfield player.coop_with_others label="" %} </td>
+            </tr>
+        </table>
+
+    {% else %}
+
+        <div class="text-left" style="color:#FF0000;">
+            <h5>您尚無連結玩家，無法進行此階段遊戲</h5>
+        </div>
+
+    {% endif %} <br><br><br>
+
+    {% next_button %}
+
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Version 2: Your Choice
+{% endblock %}
+
+{% block content %}
+
+    {% include 'game_1/GroupResults.html' %}<br><br>
+
+    <h2>
+        Sent Points To Others  <div style="font-size:20px; margin:0px 20px; display:inline;">預期目標：最後每一位參與者的點數應相同為 {{points_average}} 點</div>
+    </h2>
+
+    <br>
+
+    <table class="table">
+        <tr id="send_tr">
+            {% for id in receive_players_id %}
+                <th>
+                    Player {{id}}：
+                </th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for field in form %}
+                <td>
+                    {{ field }}
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+
+    {% next_button %}
+
+{% endblock %}
+
+

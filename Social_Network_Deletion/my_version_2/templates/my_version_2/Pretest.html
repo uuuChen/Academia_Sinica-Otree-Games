@@ -1,0 +1,105 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+{% include 'my_version_2/Instructions.html' %}<br><br>
+
+<div class="card bg-light" id="instructionWrapper">
+    <div class="card-body">
+
+        <div id="pretest_rules">
+            以下，我們將請您回答幾個問題，來幫助您更瞭解即將進行的實驗遊戲。請您細心回答，全部答對了，才能開始今天的實驗。
+        </div>
+
+        <hr>
+
+        <div class="question_title">
+            問題一：
+        </div>
+        <div class="question">
+            假設您現在有 2 個連結對象，所以您手上有 2 點。這 2 位決定把他 / 她們的點數（每人 1 點）給您，而您決定保留點數（2 點）給您自己。如果是這樣的話，您可以從遊戲中拿到幾點？[ 記得，凡給出的點數都會變雙倍！]
+        </div>
+        <div class="options">
+            {% formfield player.pretest_1_options label="" %}
+        </div>
+
+
+        <div class="question_title">
+            問題二：
+        </div>
+        <div class="question">
+            假設您現在有 2 個連結對象，所以您手上有 2 點。這 2 位決定保留點數給他 / 她們自己，而您也決定保留點數（2 點）給自己。如果是這樣的話 ，您可以從遊戲中拿到幾點？<br>
+        </div>
+        <div class="options">
+            {% formfield player.pretest_2_options label="" %}
+        </div>
+
+        <div class="question_title">
+            問題三：
+        </div>
+        <div class="question">
+            假設您現在有 2 個連結對象，所以您手上有 2 點。這 2 位決定保留點數給他 / 她們自己，而您決定把點數給他 / 她們。如果是這樣的話，您可以從遊戲中拿到幾點？
+        </div>
+        <div class="options">
+            {% formfield player.pretest_3_options label="" %}
+        </div>
+
+        <div class="question_title">
+            問題四：
+        </div>
+        <div class="question">
+           假設您現在有 2 個連結對象，所以您手上有 2 點。這 2 位決定把他 / 她們的點數（每人 1 點）給您，而您也決定把點數給他 / 她們。如果是這樣的話，您可以從遊戲中拿到幾點？[ 記得，凡給出的點數都會變雙倍！]<br>
+        </div >
+        <div class="options">
+            {% formfield player.pretest_4_options label="" %}
+        </div>
+
+         <div class="question_title">
+            問題五：
+        </div>
+        <div class="question">
+           假設您目前有 4 個連結對象，然後您提出與其中兩個的對象切斷連結，請問下一回合時，您會有多少連結對象？<br>
+        </div>
+        <div class="options">
+            {% formfield player.pretest_5_options label="" %}
+        </div>
+
+    </div>
+</div> <br><br>
+
+{% next_button %}
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        #pretest_rules {
+            color:#E63F00;
+            font-weight:bold;
+            font-size:20px;
+            margin: 20px 0px 0px 0px;
+        }
+
+        .indent_1 {
+            margin-left:28px;
+        }
+
+        .question_title {
+            color:#009FCC;
+            font-size:25px;
+            font-weight:bold;
+            margin: 20px 0px 13px 0px;
+        }
+        .question {
+            margin: 0px 0px 20px 28px;
+            font-size:20px;
+        }
+        .options {
+            margin: 0px 0px 0px 17px;
+            font-size:20px;
+        }
+    </style>
+{% endblock %}
+
+

@@ -1,0 +1,178 @@
+
+{% extends "global/Page.html" %}
+{% load otree %}
+
+
+{% block title %}
+    玩家{{ cur_id }} / 階段二 &nbsp; &nbsp;( 第 {{ round_number }} 回合  )
+{% endblock %}
+
+{% block content %}
+    {% if has_any_connection %}
+        <h5> 請圈選您想要切斷的對象：</h5> <br>
+
+        <table class="table">
+            <tr>
+                <th>是否切斷</th>
+                <th>人選</th>
+                <th>紀錄（有給別人點數的回合數 /參與遊戲的總回合數）</th>
+            </tr>
+            <!-- -------------------------------------------------------------------------------------- -->
+            <!--＊＊ 原始版本 ＊＊-->
+            <!-- 以下的程式碼是模仿 python 中的 zip，讓 form 跟 others_records 被 zip 在一起 -->
+            <!-- -------------------------------------------------------------------------------------- -->
+            <!--{% for field in form %}{% for other_records in others_records %}-->
+                <!--{% if forloop.counter == forloop.parentloop.counter %}-->
+                    <!--<tr>-->
+                        <!--<td>-->
+                            <!--<div style="margin-left: 20px">-->
+                                <!--{{ field }}-->
+                            <!--</div>-->
+                        <!--</td>-->
+                        <!--<td> {{ other_records.0 }} </td>-->
+                        <!--<td> {{ other_records.1 }} / {{ other_records.2 }} </td>-->
+                    <!--</tr>-->
+                <!--{% endif %}-->
+            <!--{% endfor %}{% endfor %}-->
+        </table>
+
+        <!-- -------------------------------------------------------------------------------------- -->
+        <!--＊＊ 更新版本 ＊＊-->
+        <!-- 放置隱藏 checkbox 的地方，這裡建議要給「id」，讓 javascript 中可以快速的找到它 -->
+        <!-- -------------------------------------------------------------------------------------- -->
+        <div id="hidden-forms"></div>
+        <div id="social-graph"></div>
+    {% else %}
+        <div class="text-left" style="color:#FF0000;">
+            <h5>您與所有玩家皆已斷除連結！</h5>
+        </div>
+    {% endif %} <br><br>
+
+    {% next_button %}
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/networkgraph.js"></script>
+
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%:
+        }
+    </style>
+
+    <script>
+        var social_network_chart = Highcharts.chart('social-graph', {
+            chart: {
+                type: 'networkgraph',
+                events:{
+                    'load': function(event) {
+                        var data_id = 0;
+                        console.log(this)
+
+                        <!-- -------------------------------------------------------------------------------------- -->
+                        <!-- ＊＊ 原始版本 ＊＊
+                        <!--以下的程式碼是，對所有的 checkbox 增加 click listener，當點擊某個 checkbox 的時候，-->
+                        <!--呼叫 highcharts 裡對應 Node 的 click 函式。要注意這裡僅是宣告而已，並沒有實際的事情發生，-->
+                        <!--就像是初始化物件一樣。-->
+                        <!-- -------------------------------------------------------------------------------------- -->
+                        <!--for (var player_id of {{ player.get_others_id_in_group|json}}){-->
+                            <!--var target_checkbox_id = "id_cut_" + player_id;-->
+                            <!--var checkboxEl = document.getElementById(target_checkbox_id);-->
+                            <!--checkboxEl.addEventListener("click", function(data_id){-->
+                                <!--&lt;!&ndash; &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; &ndash;&gt;-->
+                                <!--&lt;!&ndash;可以參考：https://stackoverflow.com/questions/16233681/programatically-fire-a-click-event-for-a-point-on-highchart-scatter-plot&ndash;&gt;-->
+                                <!--&lt;!&ndash; &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; &ndash;&gt;-->
+                                <!--this.series[0].data[data_id].toNode.firePointEvent('click');-->
+                            <!--}.bind(this, data_id));-->
+                            <!--data_id += 1;-->
+                        <!--}-->
+
+                        <!-- -------------------------------------------------------------------------------------- -->
+                        <!--＊＊ 更新版本 ＊＊-->
+                        <!--對所有的朋友增加 hidden_checkbox，方法是透過 innerHTML 新增，要注意 id 必須與 form_field 同名！-->
+                        <!--可以參考 https://otree.readthedocs.io/en/latest/forms.html-->
+                        <!-- -------------------------------------------------------------------------------------- -->
+                        hidden_forms = document.getElementById('hidden-forms');
+                        for (var player_id of {{player.get_others_id_in_group|json}}){
+                            var target_checkbox_id = "cut_" + player_id;
+                            hidden_forms.innerHTML += "<input type='checkbox' name='" + target_checkbox_id + "' \
+                                                        id='" + target_checkbox_id + "' style='display:none' />"
+                        }
+                    }
+                }
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                formatter: function () {
+                    <!--console.log(this)-->
+                    if (this.key == 'You')
+                        return 'You';
+                    else {
+                        var player_id = this.key.split(" ")[1];
+                        var tooltip_dict = {{ player.participant.vars.stage2_highcharts_tooltip|json }};
+                        return this.key + " " + tooltip_dict[player_id];
+                    }
+                }
+            },
+            plotOptions: {
+                networkgraph: {
+                  keys: ['from', 'to'],
+                  point:{
+                      events: {
+                           'click': function (event) {
+                               console.log(this)
+                               var clicked_node_name = this.id;
+
+                               <!-- ------------------------------------------------------------------------------ -->
+                               <!--＊＊ 原始版本 ＊＊-->
+                               <!-- ------------------------------------------------------------------------------ -->
+                               <!--var checkbox_id = "id_cut_" + clicked_node_name.split(" ")[1];-->
+
+                               <!-- ------------------------------------------------------------------------------ -->
+                               <!--＊＊ 更新版本 ＊＊-->
+                               <!--兩個版本只差別在 checkbox_id 的不同。-->
+                               <!--原始版本中的 ID 是 otree 命名的，-->
+                               <!--更新版本中的 ID 要跟 form_field 一致。-->
+                               <!-- ------------------------------------------------------------------------------ -->
+                               var checkbox_id = "cut_" + clicked_node_name.split(" ")[1];
+
+                               var checkbox = document.getElementById(checkbox_id);
+                               if (clicked_node_name != "You"){
+                                   if (this.color == "#7cb5ec") {
+                                       this.color = "#E0E0E0";
+                                       this.series.chart.update(this.color);
+                                       checkbox.checked = true;
+                                   }
+                                   else {
+                                       this.color = "#7cb5ec";
+                                       this.series.chart.update(this.color);
+                                       checkbox.checked = false;
+                                   }
+                               }
+                            },
+                            'mouseOver': function () {},
+                            'mouseOut': function () {},
+                      },
+                   },
+                }
+            },
+            series: [{
+                marker: {
+                  radius: 40
+                },
+                dataLabels: {
+                  enabled: true,
+                  linkFormat: '',
+                  allowOverlap: true
+                },
+                data: {{ player.participant.vars.stage2_highcharts_data|json }},
+            }]
+        });
+    </script>
+{% endblock %}
+
+
+

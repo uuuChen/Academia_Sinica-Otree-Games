@@ -1,0 +1,32 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+
+{% block content %}
+    <div align="center">
+        <div class="page_title"> 遊戲結束 </div>
+    </div>
+    <br>
+    <div align="center">
+        <h4> 您是<div class="mark">玩家 {{ cur_id }} </div>，總共獲得 <div class="mark"> {{ payoff }} </div> 元</h4>
+    </div>
+{% endblock %}
+
+
+{% block styles %}
+    <style>
+        .page_title {
+            color:#E63F00;
+            font-size:35px;
+            font-weight:bolder;
+            margin: 10px 0px;
+
+        }
+        .mark {
+            color: #E63F00;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 35px;
+        }
+    </style>
+{% endblock %}
